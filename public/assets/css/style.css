@@ -1,0 +1,38 @@
+html {
+    position: relative;
+    min-height: 100.1%;
+}
+body {
+    /* Margin bottom by footer height */
+    padding-top: 20px;
+    margin-bottom: 150px;
+}
+@media (min-width: 992px) {
+    .container {
+        max-width: 970px;
+    }
+}
+.navbar {
+  margin-bottom: 20px;
+}
+.navbar-brand {
+    text-transform: none;
+}
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    color: #777;
+}
+
+.footer-con {
+    padding: 20px 15px 10px;
+    border-top: 1px solid #e5e5e5;
+}
+
+#spans {
+    margin-bottom: 21px;
+}
+
+
