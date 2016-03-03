@@ -75,7 +75,7 @@ php artisan make:controller TypeController --resource
 php artisan make:controller TodoController --resource
 php artisan make:controller NoteController --resource
 php artisan make:controller PicController --resource
-
+```
 
 download http://bootswatch.com/journal/bootstrap.min.css to `public/assets/css/bootstrap-3.3.6.min.css`
 delete google font in first line, replace `"News Cycle"` with `Helvetica`.
@@ -110,9 +110,5 @@ protected function validateLogin(Request $request)
 
 
 
-
-
-
-```
 
 
