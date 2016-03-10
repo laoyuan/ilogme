@@ -40,25 +40,26 @@ class AuthController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest', ['except' => ['logout', 'edit', 'updateEmail', 'updatePassword']]);
+        $this->middleware('guest', ['except' => ['logout', 'edit', 'updateEmail', 'updatePassword', 'turnPic']]);
+        $this->middleware('auth', ['only' => ['logout', 'edit', 'updateEmail', 'updatePassword', 'turnPic']]);
     }
 
     /**
-     * Get a validator for an incoming registration request.
+     * Validate the user register request.
      *
-     * @param  array  $data
-     * @return \Illuminate\Contracts\Validation\Validator
+     * @param  \Illuminate\Http\Request  $request
+     * @return void
      */
-    protected function validator(array $data)
+    protected function validateRegister(Request $request)
     {
-        return Validator::make($data, [
+        $this->validate($request, [
             'name' => [
                 'bail', 
                 'required', 
                 'min:2', 
                 'max:16', 
                 'regex:/^[一-龥0-9a-zA-Z](-?[一-龥0-9a-zA-Z]+)+$/', 
-                'not_in:login,logout,register,password,admin,ilogme', 
+                'not_in:login,logout,register,password,admin,ilogme,home', 
                 'unique:users',
             ],
             'email' => 'bail|required|email|max:255|unique:users',
@@ -70,6 +71,19 @@ class AuthController extends Controller
                 'regex:/\d{16}|(?=[^\d])/',
                 'confirmed',
             ],
+        ]);
+    }
+
+    /**
+     * Validate the user login request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return void
+     */
+    protected function validateLogin(Request $request)
+    {
+        $this->validate($request, [
+            $this->loginUsername() => 'bail|required|email|max:255|exists:users', 'password' => 'required|min:8|max:32',
         ]);
     }
 
@@ -94,6 +108,41 @@ class AuthController extends Controller
             ],
         ]);
     }
+
+    protected function validateReset(Request $request)
+    {
+        $this->validate($request, [
+            'email' => 'bail|required|email|max:255',
+            'password' => [
+                'bail',
+                'required',
+                'min:8',
+                'max:32',
+                'regex:/(?=[^\d])|\d{16}/',
+                'confirmed',
+            ],
+        ]);
+    }
+
+
+    /**
+     * Handle a registration request for the application.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function register(Request $request)
+    {
+        if ($request->exists('name')) {
+            $request->offsetSet('name', trim($request->input('name')));
+        }
+
+        $this->validateRegister($request);
+        $user = $this->create($request->all());
+        Auth::guard($this->getGuard())->login($user);
+        return redirect('/' . $user->name);
+    }
+
 
     /**
      * Create a new user instance after a valid registration.
@@ -169,13 +218,55 @@ class AuthController extends Controller
     }
 
 
-    /**
-     * Get the guard to be used during password reset.
-     *
-     * @return string|null
-     */
-    protected function getGuard()
+    public function turnPic(Request $request)
     {
-        return property_exists($this, 'guard') ? $this->guard : null;
+        $user = $request->user();
+        if ($request->turn === 'on') {
+            $user->pic_status = 1;
+            $message = ['class' => 'success', 'message' => '开启成功！'];
+            if ($user->pic_key === null) {
+                $user->pic_key = md5($user->email . time());
+            }
+        }
+        else {
+            $user->pic_status = 0;
+            $message = ['class' => 'success', 'message' => '关闭成功！'];
+        }
+        $user->save();
+
+        return back()->with('pic_turned', $message);
+    }
+
+    /**
+     * Reset the given user's password.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function reset(Request $request)
+    {
+        $this->validate($request, [
+            'token' => 'required',
+            'email' => 'required|email',
+            'password' => 'required|confirmed|min:6',
+        ]);
+
+        $credentials = $request->only(
+            'email', 'password', 'password_confirmation', 'token'
+        );
+
+        $broker = $this->getBroker();
+
+        $response = Password::broker($broker)->reset($credentials, function ($user, $password) {
+            $this->resetPassword($user, $password);
+        });
+
+        switch ($response) {
+            case Password::PASSWORD_RESET:
+                return $this->getResetSuccessResponse($response);
+
+            default:
+                return $this->getResetFailureResponse($request, $response);
+        }
     }
 }

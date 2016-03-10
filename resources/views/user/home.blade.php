@@ -11,7 +11,7 @@
                             {{ $user->name }}
                         </h2>
                         <p>
-                            {{ $user->days()->count() }} 天 &emsp; {{ $user->spans()->count() }} 时段
+                            {{ count($user->days()->get()) }} 天 &emsp; {{ $user->spans()->count() }} 时段
                         </p>
                     </div>
                 </div>

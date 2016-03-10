@@ -18,7 +18,8 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->string('password', 60);
             $table->rememberToken();
-            $table->integer('status');
+            $table->string('pic_key', 32)->nullable()->unique();
+            $table->integer('pic_status');
             $table->timestamps();
         });
     }

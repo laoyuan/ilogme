@@ -28,21 +28,29 @@
 
 Route::group(['middleware' => ['web']], function () {
     Route::auth();
-    Route::resource('span', 'SpanController');
-    Route::resource('type', 'TypeController');
-    Route::resource('todo', 'TodoController', ['only' => ['store', 'update', 'destroy']]);
-    Route::resource('note', 'NoteController');
-    Route::resource('pic', 'PicController');
+    Route::resource('span', 'SpanController', ['only' => ['store', 'destroy']]);
+    Route::resource('type', 'TypeController', ['only' => ['store', 'destroy']]);
+    Route::resource('todo', 'TodoController', ['only' => ['store', 'destroy']]);
+    Route::resource('note', 'NoteController', ['only' => ['store', 'destroy']]);
+    Route::resource('pic', 'PicController', ['only' => ['store', 'destroy']]);
 
-    Route::get('/test', function () {
+    Route::get('/t', function () {
         return view('test');
     });
 
-    Route::get('/', 'UserController@index');
-    Route::get('/{name}/{date?}', 'UserController@home')->where('date','[\d]{8}');
+    Route::get('/home', function () {
+        return redirect('/');
+    });
+
+    Route::get('/', 'UserController@home');
+    Route::get('/u', 'UserController@index');
+    Route::get('/{name}/{date?}', 'UserController@userhome')->where('date','[\d]{8}');
     Route::post('/span/{id}/end', 'SpanController@end')->where('id','\d+');
 
     Route::get('/u/settings', 'Auth\AuthController@edit');
     Route::post('/u/settings/email', 'Auth\AuthController@updateEmail');
     Route::post('/u/settings/password', 'Auth\AuthController@updatePassword');
+    Route::post('/u/settings/pic', 'Auth\AuthController@turnPic');
+
+
 });

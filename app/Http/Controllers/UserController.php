@@ -11,10 +11,27 @@ use DB;
 
 class UserController extends Controller
 {
-    //
-    public function home(Request $request, $name, $date = null)
+    public function home(Request $request)
     {
+        $user = User::first();
+        if ($user) {
+            return $this->userhome($request, $user->name);
+        }
+        else {
+            return $this->index($request);
+        }
+    }
+
+    public function index(Request $request)
+    {
+        return view('user.index', ['users' => User::orderBy('updated_at', 'desc')->get()]);
+    }
+
+    public function userhome(Request $request, $name, $date = null)
+    {
+        DB::enableQueryLog();
         $user = User::where('name', $name)->firstOrFail();
+
         if ($date !== null) {
             $year = substr($date, 0, 4);
             $month = substr($date, 4, 2);
@@ -77,10 +94,5 @@ class UserController extends Controller
             'todos' => $todos,
             'ar_break' => $ar_break,
         ]);
-    }
-
-    public function index(Request $request)
-    {
-        return view('user.index', ['users' => User::orderBy('updated_at', 'desc')->get()]);
     }
 }

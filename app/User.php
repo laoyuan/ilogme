@@ -42,6 +42,6 @@ class User extends Authenticatable
 
     public function days()
     {
-        return $this->spans()->distinct('date');
+        return $this->spans()->groupBy('date');
     }
 }

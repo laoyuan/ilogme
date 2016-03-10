@@ -52,6 +52,7 @@
                     </form>
                     <br>
                     <br>
+
                     <form class="form-horizontal" role="form" method="POST" action="{{ url('/u/settings/email') }}" autocomplete="off">
                         {!! csrf_field() !!}
 
@@ -60,7 +61,7 @@
                             <label class="col-md-2 control-label" for="name">当前邮箱</label>
 
                             <div class="col-md-5">
-                                <input type="text" id="name" class="form-control" value="{{ auth()->user()->email }}" disabled>
+                                <input type="text" id="name" class="form-control" value="{{ Auth::user()->email }}" disabled>
                                 @if (Session::has('email_changed'))
                                 <div class="has-{{ Session::get('email_changed')['class'] }}">
                                     <span class="help-block">
@@ -84,9 +85,9 @@
                                 @endif
                             </div>
 
-                            <span class="col-md-5 help-block">
+                            <div class="col-md-5 help-block">
                                 请使用真实邮箱，找回密码用它
-                            </span>
+                            </div>
                         </div>
                         
                         <div class="form-group">
@@ -103,9 +104,9 @@
                                 @endif
                             </div>
 
-                            <span class="col-md-5 help-block">
+                            <div class="col-md-5 help-block">
                                 修改邮箱需验证密码
-                            </span>
+                            </div>
 
                         </div>
                         <div class="form-group">
@@ -115,6 +116,34 @@
                                 </button>
                             </div>
                         </div>
+                    </form>
+                    <br>
+                    <br>
+
+                    <form class="form-horizontal" role="form" method="POST" action="{{ url('/u/settings/pic') }}" autocomplete="off">
+                        {!! csrf_field() !!}
+                        @if (Auth::user()->pic_status === 0)
+                        <input type="hidden" name="turn" value="on">
+                        <div class="form-group">
+                            <div class="col-md-5 col-md-offset-2">
+                                <button type="submit" class="btn btn-success">
+                                    开启图片直播
+                                </button>
+                            </div>
+                        </div>
+                        @else
+                        <input type="hidden" name="turn" value="off">
+                        <div class="form-group">
+                            <div class="col-md-5 col-md-offset-2">
+                                <button type="submit" class="btn btn-primary">
+                                    关闭图片直播
+                                </button>
+                            </div>
+                            <div class="col-md-5 help-block">
+                                pic_key {{ auth()->user()->pic_key }}
+                            </div>
+                        </div>
+                        @endif
                     </form>
                 </div>
             </div>

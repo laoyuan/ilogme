@@ -8,22 +8,16 @@
 
     <title>ilogme</title>
 
-
     <!-- Styles -->
-    <link rel="stylesheet" href="{{ URL::asset('assets/css/bootstrap-3.3.6.min.css') }}">
-    <link rel="stylesheet" href="{{ URL::asset('assets/css/style.css') }}">
+    <link rel="stylesheet" href="/assets/css/bootstrap-3.3.6.min.css">
+    <link href="{{ elixir('assets/css/style.css') }}" rel="stylesheet">
 
-    <style>
-        .fa-btn {
-            margin-right: 6px;
-        }
-    </style>
 </head>
-<body id="app-layout">
-<div class="container">
 
+<body id="app-layout">
+
+    <div class="container">
         <nav class="navbar navbar-default">
-        
             <div class="navbar-header">
 
                 <!-- Collapsed Hamburger -->
@@ -43,7 +37,7 @@
             <div class="collapse navbar-collapse" id="app-navbar-collapse">
                 <!-- Left Side Of Navbar -->
                 <ul class="nav navbar-nav">
-                    <li><a href="{{ url('/home') }}">Home</a></li>
+                    <li><a href="{{ url('/u') }}">用户列表</a></li>
                 </ul>
 
                 <!-- Right Side Of Navbar -->
@@ -68,10 +62,9 @@
             </div>
         </nav>
         
+        @yield('content')
 
-
-    @yield('content')
-</div>
+    </div>
 
 
     <footer class="footer">
@@ -83,10 +76,10 @@
     </footer>
 
 
-<!-- JavaScripts -->
-<script type="text/javascript" src="{{ URL::asset('assets/js/jquery-1.10.2.min.js') }}"></script>
-<script type="text/javascript" src="{{ URL::asset('assets/js/bootstrap-3.3.6.min.js') }}"></script>
-@yield('js')
+    <!-- JavaScripts -->
+    <script type="text/javascript" src="{{ URL::asset('assets/js/jquery-1.10.2.min.js') }}"></script>
+    <script type="text/javascript" src="{{ URL::asset('assets/js/bootstrap-3.3.6.min.js') }}"></script>
+    @yield('js')
 
 </body>
 </html>
