@@ -5,7 +5,9 @@
     <div class="row">
         <div class="col-md-6">
             <h1>
-            {{ var_dump(Auth::id()) }}
+                休息10分钟到11点
+                <br><br>
+                bitlaoyuan@gmail.com
             </h1>
         </div>
     </div>

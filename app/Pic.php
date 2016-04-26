@@ -9,13 +9,12 @@ class Pic extends Model
 {
     use SoftDeletes;
 
-    protected $fillable = ['user_id', 'image'];
+    protected $fillable = ['user_id', 'date', 'image'];
     protected $dates = ['deleted_at'];
     protected $morphClass = 6;
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo('App\User');
     }
-
 }

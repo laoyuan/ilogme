@@ -12,7 +12,7 @@ git clone https://github.com/laoyuan/ilogme.git
 cd ilogme
 composer install
 
-\#In Mainland China, befor composer install
+#In Mainland China, befor composer install
 composer config -g repo.packagist composer http://packagist.phpcomposer.com
 
 #MySQL Command-Line

@@ -134,13 +134,13 @@
                         @else
                         <input type="hidden" name="turn" value="off">
                         <div class="form-group">
-                            <div class="col-md-5 col-md-offset-2">
+                            <div class="col-md-3 col-md-offset-2">
                                 <button type="submit" class="btn btn-primary">
                                     关闭图片直播
                                 </button>
                             </div>
-                            <div class="col-md-5 help-block">
-                                pic_key {{ auth()->user()->pic_key }}
+                            <div class="col-md-7 help-block">
+                                pic_key:<br>{{ auth()->user()->pic_key }}
                             </div>
                         </div>
                         @endif

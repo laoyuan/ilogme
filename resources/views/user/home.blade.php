@@ -16,6 +16,7 @@
                     </div>
                 </div>
             </div>
+            @include('partials.pics')
             @include('partials.todos')
         </div>
 

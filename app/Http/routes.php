@@ -34,23 +34,31 @@ Route::group(['middleware' => ['web']], function () {
     Route::resource('note', 'NoteController', ['only' => ['store', 'destroy']]);
     Route::resource('pic', 'PicController', ['only' => ['store', 'destroy']]);
 
-    Route::get('/t', function () {
-        return view('test');
-    });
-
     Route::get('/home', function () {
         return redirect('/');
     });
 
-    Route::get('/', 'UserController@home');
-    Route::get('/u', 'UserController@index');
-    Route::get('/{name}/{date?}', 'UserController@userhome')->where('date','[\d]{8}');
-    Route::post('/span/{id}/end', 'SpanController@end')->where('id','\d+');
+    Route::get('/t', function () {
+        return view('test');
+    });
 
+    Route::get('/b', function () {
+        return view('welcome');
+    });
+
+    Route::get('/', 'UserController@home');
+    Route::get('/p/{user_id}/{id}', 'UserController@showPic')->where(['user_id' => '\d+', 'id' => '\d+']);
+    Route::post('/p/savepic', 'UserController@savePic');
+    
+    Route::get('/u', 'UserController@index');
     Route::get('/u/settings', 'Auth\AuthController@edit');
     Route::post('/u/settings/email', 'Auth\AuthController@updateEmail');
     Route::post('/u/settings/password', 'Auth\AuthController@updatePassword');
     Route::post('/u/settings/pic', 'Auth\AuthController@turnPic');
+
+    Route::get('/{name}/{date?}', 'UserController@userHome')->where('date','[\d]{8}');
+    Route::post('/span/{id}/end', 'SpanController@end')->where('id','\d+');
+    Route::post('/{name}/savepic', 'UserController@savePic');
 
 
 });

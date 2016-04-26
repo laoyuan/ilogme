@@ -5,7 +5,7 @@
         </span>
         @foreach ($todos as $todo)
         <div class="list-group-item fade in" itemid="{{ $todo->id }}">
-            @if ($user->id === Auth::id())
+            @if (Auth::user() && Auth::user()->id === $user->id)
             <button type="button" class="close" data-dismiss="alert">×</button>
             @endif
             {{ $todo->title }}
@@ -17,7 +17,7 @@
     @include('errors.todoErrors')
 
     <!-- New todo Form -->
-    @if ($user->id === Auth::id())
+    @if (Auth::user() && Auth::user()->id === $user->id)
     <form action="/todo" method="POST">
         {{ csrf_field() }}
         <div class="form-group">

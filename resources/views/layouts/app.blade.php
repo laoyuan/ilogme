@@ -70,7 +70,7 @@
     <footer class="footer">
         <div class="container">
             <div class="footer-con">
-                <p>Made by <a href="https://github.com/laoyuan/ilogme">Laoyuan</a>, Based on <a href="https://laravel.com/">Laravel</a> & <a href="http://getbootstrap.com" rel="nofollow">Bootstrap</a>. Code released under the MIT License.</p>
+                <p>Made by <a href="https://github.com/laoyuan/ilogme">Laoyuan</a>, based on <a href="https://laravel.com/">Laravel</a> & <a href="http://getbootstrap.com" rel="nofollow">Bootstrap</a>.</p>
             </div>
         </div>
     </footer>

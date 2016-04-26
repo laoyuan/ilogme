@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\User;
+use App\Pic;
 use DB;
 
 class UserController extends Controller
@@ -15,7 +16,7 @@ class UserController extends Controller
     {
         $user = User::first();
         if ($user) {
-            return $this->userhome($request, $user->name);
+            return $this->userHome($request, $user->name);
         }
         else {
             return $this->index($request);
@@ -27,9 +28,8 @@ class UserController extends Controller
         return view('user.index', ['users' => User::orderBy('updated_at', 'desc')->get()]);
     }
 
-    public function userhome(Request $request, $name, $date = null)
+    public function userHome(Request $request, $name, $date = null)
     {
-        DB::enableQueryLog();
         $user = User::where('name', $name)->firstOrFail();
 
         if ($date !== null) {
@@ -84,6 +84,14 @@ class UserController extends Controller
             }
         }
 
+        //图片
+        if ($date === null) {
+            $pics = null;
+        }
+        else {
+            $pics = $user->pics()->where('date', str_replace('-', '', $date))->orderBy('created_at')->get();
+        }
+
         $types = $user->types;
         $todos = $user->todos()->orderBy('created_at', 'desc')->get();
         return view('user.home', [
@@ -92,7 +100,51 @@ class UserController extends Controller
             'spans' => $spans,
             'types' => $types,
             'todos' => $todos,
+            'pics' => $pics,
             'ar_break' => $ar_break,
         ]);
+    }
+
+    //保存截图
+    public function savePic(Request $request, $name) {
+        $user = User::where('name', $name)->first();
+        if (!$user) {
+            return 'user not found by name: ' . $name .'.';
+        }
+        if ($user->pic_status === 0) {
+            return 'not allowed, please check user settings.';
+        }
+        
+        //decrypt
+        $ciphertext_dec = base64_decode($request->data);
+        $iv_size = mcrypt_get_iv_size(MCRYPT_RIJNDAEL_128, MCRYPT_MODE_CBC);
+        $iv_dec = substr($ciphertext_dec, 0, $iv_size);
+        $ciphertext_dec = substr($ciphertext_dec, $iv_size);
+        $pic_data = mcrypt_decrypt(MCRYPT_RIJNDAEL_128, $user->pic_key, $ciphertext_dec, MCRYPT_MODE_CBC, $iv_dec);
+
+        //store
+        if ($pic_data !== false) {
+            $pic = $user->pics()->create([
+                'user_id' => $user->id,
+                'date' => date('Ymd', time()),
+                'image' => $pic_data,
+            ]);
+            if ($pic) {
+                return 'OK.';
+            }
+            else {
+                return 'fail to save.';
+            }
+        }
+        else {
+            return 'data wrong.';
+        }
+    }
+
+    //显示截图
+    public function showPic(Request $request, $user_id, $id) {
+        $pic = Pic::where(['id' => $id, 'user_id' => $user_id])->firstOrFail();
+        return response($pic->image)
+            ->header('Content-Type', 'image/jpeg');
     }
 }
