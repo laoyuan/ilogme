@@ -1,9 +1,9 @@
-# ilogme based on Laravel 5.2
+# iLogme based on Laravel 5.2
 
 [![License](https://poser.pugx.org/laravel/framework/license.svg)](https://github.com/laravel/laravel/)
 
 Log and show yourself.
-Demo [ilogme.com](http://ilogme.com/laoyuan).
+Demo [iLogme.com](http://ilogme.com/laoyuan).
 
 ## Setup
 
