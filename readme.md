@@ -8,15 +8,16 @@ Demo [ilogme.com](http://ilogme.com/laoyuan) - comming soon.
 ## Setup
 
 ```
+#MySQL Command-Line
+CREATE DATABASE `ilogme` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+
+cd /home
 git clone https://github.com/laoyuan/ilogme.git
 cd ilogme
 composer install
 
 #In Mainland China, befor composer install
 composer config -g repo.packagist composer http://packagist.phpcomposer.com
-
-#MySQL Command-Line
-CREATE DATABASE  `ilogme` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 #edit DB_*
 cp .env.example .env
@@ -25,7 +26,30 @@ vi .env
 php artisan key:generate
 php artisan migrate --seed
 
+chown -R nginx:nginx bootstrap/cache
+chown -R nginx:nginx storage
+
+
+#edit nginx.conf
+    server {
+        listen       80;
+        server_name  ilogme.com www.ilogme.com;
+        root         /home/ilogme/public;
+        index        index.php index.html;
+
+        location / {
+            try_files $uri $uri/ /index.php?$query_string;
+        }
+
+        location ~ \.php$ {
+            fastcgi_pass   unix:/run/php-fpm/php70-php-fpm.sock;
+            fastcgi_index  index.php;
+            fastcgi_param  SCRIPT_FILENAME $document_root$fastcgi_script_name;
+            include        fastcgi_params;
+        }
+    }
 ```
+
 
 ##hack for "Remember me", reduce to 30 days
 

@@ -132,6 +132,19 @@
                             </div>
                         </div>
                         @else
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">user_name</label>
+                            <div class="col-md-5 radio">
+                                {{ auth()->user()->name }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">pic_key</label>
+                            <div class="col-md-5 radio">
+                                {{ auth()->user()->pic_key }}
+                            </div>
+                        </div>
+
                         <input type="hidden" name="turn" value="off">
                         <div class="form-group">
                             <div class="col-md-3 col-md-offset-2">
@@ -139,9 +152,7 @@
                                     关闭图片直播
                                 </button>
                             </div>
-                            <div class="col-md-7 help-block">
-                                pic_key:<br>{{ auth()->user()->pic_key }}
-                            </div>
+
                         </div>
                         @endif
                     </form>
