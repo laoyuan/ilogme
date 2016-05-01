@@ -12,7 +12,11 @@
     <div class="alert alert-info" style="margin-bottom: 0;">
         <span class="text-muted">{{ $span->created_at->format('H:i') }}&emsp;{{ $types->where('id', $span->type_id)->first()->title }}：</span><strong>{{ $span->content }}</strong>
         @if ($span->spend === -1)
-        <span class="pull-right text-muted">已进行 {{ $span->spend_fine() }}&emsp;<button class="btn btn-default btn-sm" itemid="{{ $span->id }}">{{ $span->type_id === 1 ? '休息' : '结束' }}</button></span>
+        <span class="pull-right text-muted">已进行 {{ $span->spend_fine() }}
+            @if ($user->id === Auth::id())
+                &emsp;<button class="btn btn-default btn-sm" itemid="{{ $span->id }}">{{ $span->type_id === 1 ? '休息' : '结束' }}</button>
+            @endif
+        </span>
         @else
         <span class="pull-right text-muted">{{ $span->spend_fine() }}</span>
         @endif
