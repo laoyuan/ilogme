@@ -51,7 +51,7 @@ chown -R nginx:nginx storage
 ```
 
 
-##hack for "Remember me", reduce to 30 days
+## hack for "Remember me", reduce to 30 days
 
 Illuminate/Auth/SessionGuard.php
 ```
@@ -62,10 +62,11 @@ protected function createRecaller($value)
 }
 ```
 
+## client to upload screencapture
+https://github.com/laoyuan/ilogme-client
 
 
-
-##DevLog
+## DevLog
 
 
 ```
