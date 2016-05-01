@@ -105,9 +105,8 @@ mv bootstrap.min.css public/assets/css/bootstrap-3.3.6.min.css
 delete google font in first line, replace `"News Cycle"` with `Helvetica`.
 
 
-
-
-
+wget --no-check-certificate https://github.com/tuupola/jquery_lazyload/raw/master/jquery.lazyload.min.js
+mv jquery.lazyload.min.js public/assets/js/jquery.lazyload.min.js
 
 
 
