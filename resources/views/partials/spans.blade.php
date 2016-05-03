@@ -24,7 +24,7 @@
         @if ($span->spend === -1)
         <span class="pull-right text-muted">已进行 {{ $span->spend_fine() }}
             @if ($user->id === Auth::id())
-                &emsp;<button class="btn btn-default btn-sm" itemid="{{ $span->id }}">{{ $span->type_id === 1 ? '休息' : '结束' }}</button>
+                &nbsp;<button class="btn btn-default btn-sm" itemid="{{ $span->id }}">{{ $span->type_id === 1 ? '休息' : '结束' }}</button>
             @endif
         </span>
         @else
