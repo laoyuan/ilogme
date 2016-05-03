@@ -135,7 +135,7 @@ return [
     |
     */
 
-    'domain' => 'null',
+    'domain' => null,
     #'domain' => '.ilogme.com',
 
     /*
