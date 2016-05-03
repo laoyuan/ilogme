@@ -59,7 +59,7 @@ class UserController extends Controller
                 return redirect(url('/' . $user->name));
             }
 
-            //跨天的时段，比如睡觉
+            //第1个时段有可能是昨天开始的，比如睡觉
             $lastday_begin = date('Y-m-d H:i:s', mktime(0, 0, 0, $month, $day - 1, $year));
             $lastday_end = date('Y-m-d H:i:s', mktime(23, 59, 59, $month, $day - 1, $year));
             $last_span = $user->spans()->whereBetween('created_at', [$lastday_begin, $lastday_end])->orderBy('created_at', 'desc')->first();
@@ -68,10 +68,15 @@ class UserController extends Controller
             }
         }
 
-        //相邻时段间隔 (dirty)
+        //相邻时段间隔 (dirty)、工作、学习时长统计
+        $ar_sum = [];
         $ar_break = [];
         if ($spans !== null) {
             foreach ($spans as $k => $span) {
+                if (empty($ar_sum[$span->type_id])) {
+                    $ar_sum[$span->type_id] = 0;
+                }
+                $ar_sum[$span->type_id] += $span->spend !== -1 ? $span->spend : time() - $span->created_at->getTimestamp();
                 $time_begin = $span->created_at->getTimestamp();
                 $ar_break[$k] = $time_begin + $span->spend;
                 if ($k > 0) {
@@ -102,6 +107,7 @@ class UserController extends Controller
             'todos' => $todos,
             'pics' => $pics,
             'ar_break' => $ar_break,
+            'ar_sum' => $ar_sum,
         ]);
     }
 

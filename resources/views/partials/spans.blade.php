@@ -1,8 +1,8 @@
 
 @if ($date === null)
-<p class="lead">今日暂无</p>
+<h4>暂无时段<h4>
 @else
-<p class="lead">{{ $date }}</p>
+<h4>{{ $date }}</h4>
 @endif
 
 @if ($spans !== null)
@@ -10,7 +10,17 @@
 @foreach ($spans as $k => $span)
 
     <div class="alert alert-info" style="margin-bottom: 0;">
-        <span class="text-muted">{{ $span->created_at->format('H:i') }}&emsp;{{ $types->where('id', $span->type_id)->first()->title }}：</span><strong>{{ $span->content }}</strong>
+        <span class="text-muted">
+            @if (substr($span->created_at, 0, 10) !== date('Y-m-d', time()))
+            {{ date('m-d', strtotime($span->created_at) + $span->spend) }}
+            @endif
+            {{ $span->created_at->format('H:i') }}
+            @if ($span->spend !== -1)
+            - {{ $span->created_at->modify('+' . $span->spend . ' seconds')->format('H:i') }}
+            @endif
+            &emsp;{{ $types->where('id', $span->type_id)->first()->title }}：
+        </span>
+        <strong>{{ $span->content }}</strong>
         @if ($span->spend === -1)
         <span class="pull-right text-muted">已进行 {{ $span->spend_fine() }}
             @if ($user->id === Auth::id())
@@ -30,11 +40,20 @@
 </div>
 @endif
 
+
+@if ($user->id === Auth::id())
+
+    @if ($date !== date('Y-m-d', time()))
+    <br>
+    <h4>{{ date('Y-m-d', time()) }} 开始今天的 Log:</h4>
+    @elseif (! empty($ar_sum[1]))
+    <p class="pull-right">今天已工作 {{ceil($ar_sum[1]/60)}} 分钟</p>
+    <br><br>
+    @endif
+
 <!-- Display Validation Errors -->
 @include('errors.spanErrors')
-
 <!-- New span Form -->
-@if ($user->id === Auth::id())
 <form action="/span" method="POST">
     {{ csrf_field() }}
 <div class="row">
@@ -46,7 +65,6 @@
             @endforeach
         </select>
     </div>
-
 
     <div class="form-group col-lg-10">
         <label class="control-label" for="input-title">内容</label>

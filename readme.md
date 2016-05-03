@@ -4,6 +4,7 @@
 
 Log and show yourself.
 Demo [iLogme.com](http://ilogme.com/laoyuan).
+记录每天要干些什么（ Todo ），打算立刻去干什么（时段）、到底干了什么（截屏）
 
 ## Setup
 
@@ -55,11 +56,11 @@ chown -R nginx:nginx storage
 
 Illuminate/Auth/SessionGuard.php
 ```
-protected function createRecaller($value)
-{
-    #return $this->getCookieJar()->forever($this->getRecallerName(), $value);
-    return $this->getCookieJar()->make($this->getRecallerName(), $value, 43200);
-}
+    protected function createRecaller($value)
+    {
+        #return $this->getCookieJar()->forever($this->getRecallerName(), $value);
+        return $this->getCookieJar()->make($this->getRecallerName(), $value, 43200);
+    }
 ```
 
 ## client to upload screencapture
