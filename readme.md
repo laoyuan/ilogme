@@ -2,8 +2,8 @@
 
 [![License](https://poser.pugx.org/laravel/framework/license.svg)](https://github.com/laravel/laravel/)
 
-Log and show yourself.
-Demo [iLogme.com](http://ilogme.com/laoyuan).
+Log and show yourself.Demo [iLogme.com](http://ilogme.com/laoyuan).
+
 记录每天要干些什么（ Todo ），打算立刻去干什么（时段）、到底干了什么（截屏）
 
 ## Setup
