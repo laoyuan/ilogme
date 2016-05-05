@@ -11,7 +11,7 @@
         <div class="list-group-item" style="padding: 5px;">
             <div id="myCarousel" class="carousel">
               
-               <!-- 轮播（Carousel）项目 -->
+               <!-- 轮播（Carousel）项目，默认加载最新一张图和它的前4张、后4张 -->
                 <div class="carousel-inner">
                     @foreach ($pics as $k => $pic)
                     <div class="item{{ $k + 1 === $pics->count() ? ' active' : '' }}">

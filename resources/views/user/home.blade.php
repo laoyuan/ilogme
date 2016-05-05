@@ -39,7 +39,7 @@
             }
         });
 
-        //图片加载
+        //图片预加载，前后的第5张图
         $('#myCarousel').on('slide.bs.carousel', function () {
             var _index = parseInt($('#myCarousel .active img').attr('_index'));
             next_index = (_index + 5) % ar_pic.length;

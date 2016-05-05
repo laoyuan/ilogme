@@ -4,7 +4,7 @@
             <h3 class="panel-title">Todo List</h3>
         </span>
         @foreach ($todos as $todo)
-        <div class="list-group-item fade in" itemid="{{ $todo->id }}">
+        <div class="list-group-item fade in" _itemid="{{ $todo->id }}">
             @if (Auth::user() && Auth::user()->id === $user->id)
             <button type="button" class="close" data-dismiss="alert">×</button>
             @endif
