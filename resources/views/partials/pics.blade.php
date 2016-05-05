@@ -9,7 +9,7 @@
             <h3 class="panel-title">实时截屏</h3>
         </span>
         <div class="list-group-item" style="padding: 5px;">
-            <div id="myCarousel" class="carousel">
+            <div id="myCarousel" class="carousel" data-ride="carousel" data-interval="2500">
               
                <!-- 轮播（Carousel）项目，默认加载最新一张图和它的前4张、后4张 -->
                 <div class="carousel-inner">
