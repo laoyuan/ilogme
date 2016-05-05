@@ -32,15 +32,25 @@
     <script type="text/javascript" src="{{ URL::asset('assets/js/bootstrap3-typeahead.js') }}"></script>
     
     <script type="text/javascript">
+        
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
 
+        //图片加载
+        $('#myCarousel').on('slide.bs.carousel', function () {
+            var _index = parseInt($('#myCarousel .active img').attr('_index'));
+            next_index = (_index + 5) % ar_pic.length;
+            prev_index = (_index - 5 + ar_pic.length) % ar_pic.length;
+            $('#pic_' + ar_pic[next_index]).attr('src', $('#pic_' + ar_pic[next_index]).attr('data-original'));
+            $('#pic_' + ar_pic[prev_index]).attr('src', $('#pic_' + ar_pic[prev_index]).attr('data-original'));
+        });
+
         //删除todo
         $('#todos .close').click(function () {
-            var itemId = $(this.parentNode).attr('itemid');
+            var itemId = $(this.parentNode).attr('_itemid');
             $.ajax({
                 context: this,
                 type: "POST",
@@ -57,7 +67,7 @@
 
         //结束时段
         $('#spans .btn-sm').click(function () {
-            var itemId = $(this).attr('itemid');
+            var itemId = $(this).attr('_itemid');
             $.ajax({
                 context: this,
                 type: "POST",

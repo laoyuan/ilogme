@@ -16,7 +16,7 @@
                     @foreach ($pics as $k => $pic)
                     <div class="item{{ $k + 1 === $pics->count() ? ' active' : '' }}">
                         <p class="text-center">{{ ($pics->count()) . ' - ' . ($k + 1) }}</p>
-                        <img src="/p/{{ $pic->user_id }}/{{ $pic->id }}" class="lazy">
+                        <img id="pic_{{ $pic->id }}" _index="{{ $k }}" data-original="/p/{{ $pic->user_id }}/{{ $pic->id }}" src="/p/{{ $pic->user_id }}/{{ ($k + 5 > $pics->count() - 1 || $k < 4) ? $pic->id : $pics->last()->id }}">
                         <p class="text-center">{{ $pic->created_at }}</p>
                     </div>
                     @endforeach

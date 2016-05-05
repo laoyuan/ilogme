@@ -52,9 +52,7 @@ class UserController extends Controller
         }
 
         if ($date !== null) {
-            $day_begin = date('Y-m-d H:i:s', mktime(0, 0, 0, $month, $day, $year));
-            $day_end = date('Y-m-d H:i:s', mktime(23, 59, 59, $month, $day, $year));
-            $spans = $user->spans()->whereBetween('created_at', [$day_begin, $day_end])->where('spend', '<>', 0)->get();
+            $spans = $user->spans()->where('date', $year.$month.$day)->where('spend', '<>', 0)->get();
             if ($spans->isEmpty()) {
                 return redirect(url('/' . $user->name));
             }
