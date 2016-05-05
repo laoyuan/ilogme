@@ -43,9 +43,9 @@
 
 @if ($user->id === Auth::id())
 
-    @if ($date !== date('Y-m-d', time()))
+    @if ($date !== date('Ymd', time()))
     <br>
-    <h4>{{ date('Y-m-d', time()) }} 开始今天的 Log:</h4>
+    <h4>{{ date('Y-m-d', time()) }} 今天的 Log:</h4>
     @elseif (! empty($ar_sum[1]))
     <p class="pull-right">今天已工作 {{ceil($ar_sum[1]/60)}} 分钟</p>
     <br><br>
