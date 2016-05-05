@@ -2,7 +2,7 @@
 @if ($date === null)
 <h4>暂无时段<h4>
 @else
-<h4>{{ $date }}</h4>
+<h4>{{ $spans->last()->created_at->format('Y-m-d') }}</h4>
 @endif
 
 @if ($spans !== null)
@@ -11,12 +11,12 @@
 
     <div class="alert alert-info" style="margin-bottom: 0;">
         <span class="text-muted">
-            @if (substr($span->created_at, 0, 10) !== date('Y-m-d', time()))
-            {{ date('m-d', strtotime($span->created_at) + $span->spend) }}
+            @if ($span->created_at->format('Ymd') !== $date)
+            {{ $span->created_at->format('m-d') . '&nbsp;' }}
             @endif
-            {{ $span->created_at->format('H:i') }}
+            {{ $span->created_at->format('G:i') }}
             @if ($span->spend !== -1)
-            - {{ $span->created_at->modify('+' . $span->spend . ' seconds')->format('H:i') }}
+            - {{ $span->created_at->modify('+' . $span->spend . ' seconds')->format('G:i') }}
             @endif
             &nbsp;{{ $types->where('id', $span->type_id)->first()->title }}：
         </span>

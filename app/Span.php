@@ -38,4 +38,15 @@ class Span extends Model
         }
         return $spend_fine;
     }
+
+    //结束时间 datetime
+    public function ended_at()
+    {
+        if ($this->spend > 0) {
+            return $this->created_at->modify('+' . $this->spend . ' seconds');
+        }
+        else {
+            return null;
+        }
+    }
 }

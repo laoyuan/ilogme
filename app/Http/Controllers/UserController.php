@@ -32,44 +32,28 @@ class UserController extends Controller
     {
         $user = User::where('name', $name)->firstOrFail();
 
-        if ($date !== null) {
-            $year = substr($date, 0, 4);
-            $month = substr($date, 4, 2);
-            $day = substr($date, 6, 2);
-            $date = $year . '-' . $month . '-' .$day;
-        }
-        else {
+        if ($date === null) {
             $last_span = $user->spans()->orderBy('created_at', 'desc')->first();
             if ($last_span !== null) {
-                $year = $last_span->created_at->format('Y');
-                $month = $last_span->created_at->format('m');
-                $day = $last_span->created_at->format('d');
-                $date = $year . '-' . $month . '-' .$day;
-            }
-            else {
-                $spans = null;
+                $date = $last_span->created_at->format('Ymd');
             }
         }
 
         if ($date !== null) {
-            $spans = $user->spans()->where('date', $year.$month.$day)->where('spend', '<>', 0)->get();
+            $spans = $user->spans()->where('date', $date)->where('spend', '<>', 0)->orderBy('id')->get();
             if ($spans->isEmpty()) {
                 return redirect(url('/' . $user->name));
             }
 
-            //第1个时段有可能是昨天开始的，比如睡觉
-            $lastday_begin = date('Y-m-d H:i:s', mktime(0, 0, 0, $month, $day - 1, $year));
-            $lastday_end = date('Y-m-d H:i:s', mktime(23, 59, 59, $month, $day - 1, $year));
-            $last_span = $user->spans()->whereBetween('created_at', [$lastday_begin, $lastday_end])->orderBy('created_at', 'desc')->first();
-            if ($last_span !== null) {
-                $spans->prepend($last_span);
+            //第1个时段有可能是跨天的，比如睡觉
+            $first_span = $user->spans()->where('id', '<', $spans->first()->id)->orderBy('id', 'desc')->first();
+            if ($first_span && $first_span->ended_at()->format('Ymd') === $date) {
+                $spans->prepend($first_span);
             }
-        }
 
-        //相邻时段间隔 (dirty)、工作、学习时长统计
-        $ar_sum = [];
-        $ar_break = [];
-        if ($spans !== null) {
+            //相邻时段间隔 (dirty)、工作、学习时长统计
+            $ar_sum = [];
+            $ar_break = [];
             foreach ($spans as $k => $span) {
                 if (empty($ar_sum[$span->type_id])) {
                     $ar_sum[$span->type_id] = 0;
