@@ -50,7 +50,8 @@ class TodoController extends Controller
     public function store(Request $request)
     {
         $this->validateTodo($request); 
-        $request->user()->todos()->create(['title' => $request->title]);
+        #$request->user()->todos()->create(['title' => $request->title]);
+        Auth::user()->todos()->create(['title' => $request->title]);
         return back();
     }
 
@@ -96,7 +97,8 @@ class TodoController extends Controller
      */
     public function destroy(Request $request, $id)
     {
-        $todo = $request->user()->todos()->findOrFail($id);
+        #$todo = $request->user()->todos()->findOrFail($id);
+        $todo = Auth::user()->todos()->findOrFail($id);
         $todo->delete();
         return 'deleted';
     }
