@@ -23,7 +23,7 @@
         <strong>{{ $span->content }}</strong>
         @if ($span->spend === -1)
         <span class="pull-right text-muted">已进行 {{ $span->spend_fine() }}
-            @if ($user->id === Auth::user()->id)
+            @if (Auth::user() && Auth::user()->id === $user->id)
                 &emsp;<button class="btn btn-default btn-sm" _itemid="{{ $span->id }}">{{ $span->type_id === 1 ? '休息' : '结束' }}</button>
             @endif
         </span>
@@ -41,7 +41,7 @@
 @endif
 
 
-@if ($user->id === Auth::user()->id)
+@if (Auth::user() && Auth::user()->id === $user->id)
 
     @if ($date !== date('Ymd', time()))
     <br>
