@@ -31,6 +31,7 @@ class UserController extends Controller
     public function userHome(Request $request, $name, $date = null)
     {
         $user = User::where('name', $name)->firstOrFail();
+        $spans = null;
 
         if ($date === null) {
             $last_span = $user->spans()->orderBy('created_at', 'desc')->first();
