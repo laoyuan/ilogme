@@ -32,7 +32,9 @@ class UserController extends Controller
     {
         $user = User::where('name', $name)->firstOrFail();
         $spans = null;
-
+        $ar_sum = [];
+        $ar_break = [];
+        
         if ($date === null) {
             $last_span = $user->spans()->orderBy('created_at', 'desc')->first();
             if ($last_span !== null) {
@@ -53,8 +55,6 @@ class UserController extends Controller
             }
 
             //相邻时段间隔 (dirty)、工作、学习时长统计
-            $ar_sum = [];
-            $ar_break = [];
             foreach ($spans as $k => $span) {
                 if (empty($ar_sum[$span->type_id])) {
                     $ar_sum[$span->type_id] = 0;
