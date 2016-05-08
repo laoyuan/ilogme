@@ -6,6 +6,9 @@ Log and show yourself.Demo [iLogme.com](http://ilogme.com/laoyuan).
 
 记录每天要干些什么（ Todo ），打算立刻去干什么（时段）、到底干了什么（截屏）
 
+## client to upload screencapture
+https://github.com/laoyuan/ilogme-client
+
 ## Setup
 
 ```
@@ -63,8 +66,7 @@ Illuminate/Auth/SessionGuard.php
     }
 ```
 
-## client to upload screencapture
-https://github.com/laoyuan/ilogme-client
+
 
 
 ## DevLog
