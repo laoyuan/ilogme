@@ -52,8 +52,8 @@
                                 <button type="submit" class="btn btn-primary">
                                     </i>登录
                                 </button>
-                                @if ($errors->has('password') && $errors->first('password') == '密码错误')
-                                <a class="btn btn-link" href="{{ url('/password/reset') }}">忘记密码?点此找回</a>
+                                @if ($errors->has('email') && $errors->first('email') == '密码和用户名不匹配。')
+                                <a class="btn btn-link" href="{{ url('/password/reset?email=' . urlencode(old('email'))) }}">忘记密码?点此找回</a>
                                 @endif
                             </div>
                         </div>

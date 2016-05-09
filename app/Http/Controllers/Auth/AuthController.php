@@ -67,7 +67,7 @@ class AuthController extends Controller
                 'bail',
                 'required',
                 'min:8',
-                'max:32',
+                'max:128',
                 'regex:/\d{16}|(?=[^\d])/',
                 'confirmed',
             ],
@@ -83,7 +83,7 @@ class AuthController extends Controller
     protected function validateLogin(Request $request)
     {
         $this->validate($request, [
-            $this->loginUsername() => 'bail|required|email|max:255|exists:users', 'password' => 'required|min:8|max:32',
+            $this->loginUsername() => 'bail|required|email|max:255|exists:users', 'password' => 'required|min:8|max:128',
         ]);
     }
 
@@ -91,7 +91,7 @@ class AuthController extends Controller
     {
         $this->validate($request, [
             'email' => 'bail|required|email|max:255|unique:users,email,' . $request->user()->id,
-            'password' => 'bail|required|min:8|max:32',
+            'password' => 'bail|required|min:8|max:128',
         ]);
     }
 
@@ -102,7 +102,7 @@ class AuthController extends Controller
                 'bail',
                 'required',
                 'min:8',
-                'max:32',
+                'max:128',
                 'regex:/(?=[^\d])|\d{16}/',
                 'confirmed',
             ],
@@ -117,7 +117,7 @@ class AuthController extends Controller
                 'bail',
                 'required',
                 'min:8',
-                'max:32',
+                'max:128',
                 'regex:/(?=[^\d])|\d{16}/',
                 'confirmed',
             ],

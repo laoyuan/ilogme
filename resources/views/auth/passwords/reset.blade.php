@@ -13,10 +13,10 @@
                         <input type="hidden" name="token" value="{{ $token }}">
                         <input type="hidden" name="email" value="{{ $email or old('email') }}">
 
-                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
+                        <div class="form-group">
                             <label class="col-md-4 control-label" for="email">邮箱</label>
 
-                            <div class="col-md-6">
+                            <div class="col-md-6{{ $errors->has('email') ? ' has-error' : '' }}">
                                 <input type="email" id="email" class="form-control" value="{{ $email or old('email') }}" disabled>
 
                                 @if ($errors->has('email'))
@@ -57,7 +57,7 @@
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
                                 <button type="submit" class="btn btn-primary">
-                                    <i class="fa fa-btn fa-refresh"></i>Reset Password
+                                    <i class="fa fa-btn fa-refresh"></i>重置密码
                                 </button>
                             </div>
                         </div>

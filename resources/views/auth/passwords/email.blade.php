@@ -16,11 +16,11 @@
                     <form class="form-horizontal" role="form" method="POST" action="{{ url('/password/email') }}">
                         {!! csrf_field() !!}
 
-                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
+                        <div class="form-group">
                             <label class="col-md-4 control-label">邮箱</label>
 
-                            <div class="col-md-6">
-                                <input type="email" class="form-control" name="email" value="{{ old('email') }}">
+                            <div class="col-md-6{{ $errors->has('email') ? ' has-error' : '' }}">
+                                <input type="email" class="form-control" name="email" value="{{ Request::input('email') }}">
 
                                 @if ($errors->has('email'))
                                     <span class="help-block">

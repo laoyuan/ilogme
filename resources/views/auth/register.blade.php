@@ -9,11 +9,30 @@
                     <form class="form-horizontal" role="form" method="POST" action="{{ url('/register') }}" autocomplete="off">
                         {!! csrf_field() !!}
 
+
+                        <div class="form-group">
+                            <label class="col-md-2 control-label" for="email">登录邮箱</label>
+
+                            <div class="col-md-5{{ $errors->has('email') ? ' has-error' : '' }}">
+                                <input type="email" id="email" class="form-control" name="email" value="{{ old('email') }}" autofocus>
+
+                                @if ($errors->has('email'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('email') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+
+                            <span class="col-md-5 help-block">
+                                请使用真实邮箱，找回密码用它
+                            </span>
+                        </div>
+
                         <div class="form-group">
                             <label class="col-md-2 control-label" for="name">用户名</label>
 
                             <div class="col-md-5{{ $errors->has('name') ? ' has-error' : '' }}">
-                                <input type="text" id="name" class="form-control" name="name" value="{{ old('name') }}" autofocus>
+                                <input type="text" id="name" class="form-control" name="name" value="{{ old('name') }}">
 
                                 @if ($errors->has('name'))
                                     <span class="help-block">
@@ -32,23 +51,6 @@
                             </span>
                         </div>
 
-                        <div class="form-group">
-                            <label class="col-md-2 control-label" for="email">登录邮箱</label>
-
-                            <div class="col-md-5{{ $errors->has('email') ? ' has-error' : '' }}">
-                                <input type="email" id="email" class="form-control" name="email" value="{{ old('email') }}">
-
-                                @if ($errors->has('email'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-
-                            <span class="col-md-5 help-block">
-                                请使用真实邮箱，找回密码用它
-                            </span>
-                        </div>
 
                         <div class="form-group">
                             <label class="col-md-2 control-label">密码</label>
