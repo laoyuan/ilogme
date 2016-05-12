@@ -56,6 +56,9 @@ Route::group(['middleware' => ['web']], function () {
     Route::post('/u/settings/password', 'Auth\AuthController@updatePassword');
     Route::post('/u/settings/pic', 'Auth\AuthController@turnPic');
 
+
+
+
     Route::get('/{name}/{date?}', 'UserController@userHome')->where('date','[\d]{8}');
     Route::post('/span/{id}/end', 'SpanController@end')->where('id','\d+');
     Route::post('/{name}/savepic', 'UserController@savePic');
