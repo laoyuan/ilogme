@@ -11,7 +11,7 @@ class Pic extends Model
 
     protected $fillable = ['user_id', 'date', 'image'];
     protected $dates = ['deleted_at'];
-    protected $morphClass = 6;
+    protected $morphClass = 7;
 
     public function user()
     {

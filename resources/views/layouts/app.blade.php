@@ -10,7 +10,8 @@
 
     <!-- Styles -->
     <link rel="stylesheet" href="/assets/css/bootstrap-3.3.6.min.css">
-    <link href="{{ elixir('assets/css/style.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    @yield('css')
 
 </head>
 

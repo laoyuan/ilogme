@@ -21,6 +21,12 @@
         </div>
 
         <div class="col-md-8">
+            @if ($date === null)
+            <h4>暂无时段<h4>
+            @else
+            <h4>{{ $spans->last()->created_at->format('Y-m-d') }}</h4>
+            @endif
+            
             @include('partials.spans')
         </div>
 

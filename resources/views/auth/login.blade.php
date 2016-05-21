@@ -12,10 +12,10 @@
                         <div class="form-group">
                             <label class="col-md-4 control-label" for="email">邮箱</label>
 
-                            <div class="col-md-6{{ $errors->has('email') ? ' has-error' : '' }}">
-                                <input type="email" id="email" class="form-control" name="email" value="{{ old('email') }}" autofocus>
+                            <div class="col-md-6{{ $errors->has('email') && $errors->first('email') !== '密码错误' ? ' has-error' : '' }}">
+                                <input type="email" id="email" class="form-control" name="email" value="{{ old('email') }}" {{ count($errors) > 0 ?: 'autofocus'}}>
 
-                                @if ($errors->has('email'))
+                                @if ($errors->has('email') && $errors->first('email') !== '密码错误')
                                     <span class="help-block">
                                         <strong>{{ $errors->first('email') }}</strong>
                                     </span>
@@ -26,12 +26,12 @@
                         <div class="form-group">
                             <label class="col-md-4 control-label" for="password">密码</label>
 
-                            <div class="col-md-6{{ $errors->has('password') ? ' has-error' : '' }}">
+                            <div class="col-md-6{{ $errors->has('password') || $errors->first('email') === '密码错误' ? ' has-error' : '' }}">
                                 <input type="password" id="password"  class="form-control" name="password">
 
-                                @if ($errors->has('password'))
+                                @if ($errors->has('password') || $errors->first('email') === '密码错误')
                                     <span class="help-block">
-                                        <strong>{{ $errors->first('password') }}</strong>
+                                        <strong>{{ $errors->has('password') ? $errors->first('password') : $errors->first('email') }}</strong>
                                     </span>
                                 @endif
                             </div>
@@ -53,6 +53,7 @@
                                     </i>登录
                                 </button>
                                 @if ($errors->has('email') && $errors->first('email') == '密码和用户名不匹配。')
+                                    {{ dd($errors) }}
                                 <a class="btn btn-link" href="{{ url('/password/reset?email=' . urlencode(old('email'))) }}">忘记密码?点此找回</a>
                                 @endif
                             </div>

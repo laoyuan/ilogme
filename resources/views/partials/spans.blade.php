@@ -1,36 +1,31 @@
 
-@if ($date === null)
-<h4>暂无时段<h4>
-@else
-<h4>{{ $spans->last()->created_at->format('Y-m-d') }}</h4>
-@endif
 
 @if ($spans !== null)
 <div id="spans">
 @foreach ($spans as $k => $span)
 
-    <div class="alert alert-info" style="margin-bottom: 0;">
+    <div class="alert {{ ($span->spend === -1) ? 'alert-danger' : 'alert-info' }} span_item">
         <span class="text-muted">
             @if ($span->created_at->format('Ymd') !== $date)
             {{ $span->created_at->format('m-d') . '&nbsp;' }}
             @endif
-            {{ $span->created_at->format('G:i') }}
+            {{ $span->created_at->format('G:i') }} <span class="glyphicon glyphicon-trash"></span>
             @if ($span->spend !== -1)
             - {{ $span->created_at->modify('+' . $span->spend . ' seconds')->format('G:i') }}
             @endif
-            &nbsp;{{ $types->where('id', $span->type_id)->first()->title }}：
+            &emsp;{{ $types->where('id', $span->type_id)->first()->title }}：
         </span>
         <strong>{{ $span->content }}</strong>
         @if ($span->spend === -1)
-        <span class="pull-right text-muted">已进行 {{ $span->spend_fine() }}
-            @if (Auth::user() && Auth::user()->id === $user->id)
-                &emsp;<button class="btn btn-default btn-sm" _itemid="{{ $span->id }}">{{ $span->type_id === 1 ? '休息' : '结束' }}</button>
-            @endif
-        </span>
+        <span class="pull-right">进行中，已进行 {{ $span->spend_fine() }}</span>
         @else
         <span class="pull-right text-muted">{{ $span->spend_fine() }}</span>
         @endif
     </div>
+
+    @if ($span->spend === -1 && Auth::user() && Auth::user()->id === $user->id)
+        &emsp;<button class="btn btn-default btn-sm pull-right" _itemid="{{ $span->id }}">{{ $span->type_id === 1 ? '休息' : '结束' }}</button>
+    @endif
 
     @if ($ar_break[$k] > 30)
     <p class="text-center" style="margin-bottom:0;">休息 {{ ceil($ar_break[$k] / 60) }} 分钟</p>

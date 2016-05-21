@@ -8,10 +8,10 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\User;
 use App\Pic;
-use DB;
 
 class UserController extends Controller
 {
+    //首页
     public function home(Request $request)
     {
         $user = User::first();
@@ -23,18 +23,20 @@ class UserController extends Controller
         }
     }
 
+    //用户列表页
     public function index(Request $request)
     {
         return view('user.index', ['users' => User::orderBy('updated_at', 'desc')->get()]);
     }
 
+    //用户首页
     public function userHome(Request $request, $name, $date = null)
     {
         $user = User::where('name', $name)->firstOrFail();
         $spans = null;
         $ar_sum = [];
         $ar_break = [];
-        
+
         if ($date === null) {
             $last_span = $user->spans()->orderBy('created_at', 'desc')->first();
             if ($last_span !== null) {
@@ -82,16 +84,7 @@ class UserController extends Controller
 
         $types = $user->types;
         $todos = $user->todos()->orderBy('created_at', 'desc')->get();
-        return view('user.home', [
-            'user' => $user,
-            'date' => $date,
-            'spans' => $spans,
-            'types' => $types,
-            'todos' => $todos,
-            'pics' => $pics,
-            'ar_break' => $ar_break,
-            'ar_sum' => $ar_sum,
-        ]);
+        return view('user.home', compact('user', 'date', 'spans', 'types', 'todos', 'pics', 'ar_break', 'ar_sum'));
     }
 
     //保存截图

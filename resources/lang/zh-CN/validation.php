@@ -90,21 +90,13 @@ return [
 
     'custom'               => [
         'name' => [
-            'min' => '用户名 不能少于 :min 个字符',
-            'max' => '用户名 不能多于 :max 个字符',
-            'regex' => '用户名 含有不允许的字符',
-            'unique' => '此用户名已经存在，换一个吧',
-            'not_in' => '此用户名已被系统占用',
+            'not_in' => '此用户名不得注册',
         ],
         'email' => [
-            'max' => '邮箱 不能多于 :max 个字符',
             'unique' => '此邮箱已经注册，请直接登录',
             'exists' => '此邮箱尚未注册',
         ],
         'password' => [
-            'confirmed' => '两次密码不一致',
-            'min' => '密码 不能少于 :min 位',
-            'max' => '密码 不能多于 :max 位',
             'regex' => '纯数字密码不能少于 16 位',
         ],
         'newpassword' => [
@@ -134,7 +126,9 @@ return [
     */
 
     'attributes'           => [
-        //
+        'name' => '用户名',
+        'email' => '邮箱',
+        'password' => '密码',
     ],
 
 ];
