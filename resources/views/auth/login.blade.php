@@ -53,7 +53,6 @@
                                     </i>登录
                                 </button>
                                 @if ($errors->has('email') && $errors->first('email') == '密码错误')
-<a href="http://localhost:8081/login">登登</a>
                                 <a class="btn btn-link" href="{{ url('/password/reset?email=' . urlencode(old('email'))) }}">忘记密码?点此找回</a>
                                 @endif
                             </div>
