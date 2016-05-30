@@ -135,13 +135,13 @@
                         <div class="form-group">
                             <label class="col-md-2 control-label">user_name</label>
                             <div class="col-md-5 radio">
-                                {{ auth()->user()->name }}
+                                {{ Auth::user()->name }}
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-md-2 control-label">pic_key</label>
                             <div class="col-md-5 radio">
-                                {{ auth()->user()->pic_key }}
+                                {{ Auth::user()->pic_key }}
                             </div>
                         </div>
 

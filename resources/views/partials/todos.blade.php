@@ -5,7 +5,7 @@
         </span>
         @foreach ($todos as $todo)
         <div class="list-group-item fade in" _itemid="{{ $todo->id }}">
-            @if (Auth::user() && Auth::user()->id === $user->id)
+            @if (Auth::check() && Auth::user()->id === $user->id)
             <button type="button" class="close" data-dismiss="alert">×</button>
             @endif
             {{ $todo->title }}
@@ -17,7 +17,7 @@
     @include('errors.todoErrors')
 
     <!-- New todo Form -->
-    @if (Auth::user() && Auth::user()->id === $user->id)
+    @if (Auth::check() && Auth::user()->id === $user->id)
     <form action="/todo" method="POST">
         {{ csrf_field() }}
         <div class="form-group">
@@ -29,7 +29,7 @@
             </div>
         </div>
     </form>
-
+    
     <script type="text/javascript">
         var typeahead_work = [
         @foreach ($todos as $todo)

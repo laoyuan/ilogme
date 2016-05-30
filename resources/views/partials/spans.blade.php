@@ -23,7 +23,7 @@
         @endif
     </div>
 
-    @if ($span->spend === -1 && Auth::user() && Auth::user()->id === $user->id)
+    @if ($span->spend === -1 && Auth::check() && Auth::user()->id === $user->id)
         &emsp;<button class="btn btn-default btn-sm pull-right" _itemid="{{ $span->id }}">{{ $span->type_id === 1 ? '休息' : '结束' }}</button>
     @endif
 
@@ -36,7 +36,7 @@
 @endif
 
 
-@if (Auth::user() && Auth::user()->id === $user->id)
+@if (Auth::check() && Auth::user()->id === $user->id)
 
     @if ($date !== date('Ymd', time()))
     <br>

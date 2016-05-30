@@ -89,29 +89,19 @@ return [
     */
 
     'custom'               => [
-        'name' => [
+        'name'        => [
             'not_in' => '此用户名不得注册',
         ],
-        'email' => [
+        'email'       => [
             'unique' => '此邮箱已经注册，请直接登录',
             'exists' => '此邮箱尚未注册',
         ],
-        'password' => [
-            'regex' => '纯数字密码不能少于 16 位',
+        'password'    => [
+            'regex'  => '纯数字密码不能少于 16 位',
         ],
         'newpassword' => [
-            'confirmed' => '两次密码不一致',
-            'min' => '新密码 不能少于 :min 位',
-            'max' => '新密码 不能多于 :max 位',
-            'regex' => '纯数字密码不能少于 16 位',
+            'regex'  => '纯数字密码不能少于 16 位',
         ],
-        'title' => [
-            'max' => '标题 不能多于 :max 个字符',
-        ],
-        'content' => [
-            'required' => '内容 不得为空',
-            'max' => '内容 不能多于 :max 个字符',
-        ]
     ],
 
     /*
@@ -126,9 +116,12 @@ return [
     */
 
     'attributes'           => [
-        'name' => '用户名',
-        'email' => '邮箱',
-        'password' => '密码',
+        'name'        => '用户名',
+        'email'       => '邮箱',
+        'password'    => '密码',
+        'newpassword' => '新密码',
+        'content'     => '内容',
+        'title'       => '标题',
     ],
 
 ];

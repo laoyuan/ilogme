@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -78,8 +78,8 @@
 
 
     <!-- JavaScripts -->
-    <script type="text/javascript" src="{{ URL::asset('assets/js/jquery-1.10.2.min.js') }}"></script>
-    <script type="text/javascript" src="{{ URL::asset('assets/js/bootstrap-3.3.6.min.js') }}"></script>
+    <script type="text/javascript" src="/assets/js/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="/assets/js/bootstrap-3.3.6.min.js"></script>
     @yield('js')
 
 </body>

@@ -35,7 +35,7 @@
 
 @section('js')
     @if (Auth::check())
-    <script type="text/javascript" src="{{ URL::asset('assets/js/bootstrap3-typeahead.js') }}"></script>
+    <script type="text/javascript" src="/assets/js/bootstrap3-typeahead.js"></script>
     
     <script type="text/javascript">
         
