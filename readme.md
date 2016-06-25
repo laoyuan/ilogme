@@ -6,12 +6,10 @@ Log and show yourself.Demo [iLogme.com](http://ilogme.com/laoyuan).
 
 记录每天要干些什么（ Todo ），打算立刻去干什么（时段）、到底干了什么（截屏）
 
-## client to upload screencapture
-https://github.com/laoyuan/ilogme-client
 
 ## Setup
 
-#MySQL Command-Line
+\#MySQL Command-Line
 CREATE DATABASE `ilogme` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 cd /home
@@ -19,10 +17,10 @@ git clone https://github.com/laoyuan/ilogme.git
 cd ilogme
 composer install
 
-#In Mainland China, befor composer install
+*In Mainland China, befor composer install
 composer config -g repo.packagist composer http://packagist.phpcomposer.com
 
-#edit DB_*
+*edit DB_*
 cp .env.example .env
 vi .env
 
@@ -34,7 +32,7 @@ chown -R nginx:nginx storage
 
 
 #edit nginx.conf
-``
+```
     server {
         listen       80;
         server_name  ilogme.com www.ilogme.com;
@@ -52,7 +50,7 @@ chown -R nginx:nginx storage
             include        fastcgi_params;
         }
     }
-``
+```
 
 
 ## hack for "Remember me", reduce to 30 days
@@ -208,3 +206,5 @@ mv lazyload.min.js public/assets/js/lazyload.min.js
 
 
 
+## client to upload screencapture
+https://github.com/laoyuan/ilogme-client
