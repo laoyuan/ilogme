@@ -124,6 +124,11 @@ class AuthController extends Controller
         ]);
     }
 
+    /**
+     * Show the application login form.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function getLogin(Request $request)
     {
         return $this->showLoginForm($request);
@@ -167,8 +172,7 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         $this->validateLogin($request);
-        //这里需要后续处理保证不会跨域重定向
-        if (session('previous')) {
+        if (session('previous') && session('previous') !== url()->current() && parse_url(session('previous'), PHP_URL_HOST) === parse_url(url()->current(), PHP_URL_HOST)) {
             $this->redirectTo = session('previous');
         }
         // If the class is using the ThrottlesLogins trait, we can automatically throttle

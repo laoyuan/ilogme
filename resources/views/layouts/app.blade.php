@@ -9,8 +9,7 @@
     <title>ilogme</title>
 
     <!-- Styles -->
-    <link rel="stylesheet" href="/assets/css/bootstrap-3.3.6.min.css">
-    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="{{ elixir('assets/css/all.css') }}">
     @yield('css')
 
 </head>
@@ -78,8 +77,7 @@
 
 
     <!-- JavaScripts -->
-    <script type="text/javascript" src="/assets/js/jquery-1.10.2.min.js"></script>
-    <script type="text/javascript" src="/assets/js/bootstrap-3.3.6.min.js"></script>
+    <script type="text/javascript" src="{{ elixir('assets/js/all.js') }}"></script>
     @yield('js')
 
 </body>

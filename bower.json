@@ -1,0 +1,15 @@
+{
+    "name": "ilogme",
+    "description": "log yourself",
+    "ignore": [
+        "**/.*",
+        "node_modules",
+        "vendor/bower_dl",
+        "test",
+        "tests"
+    ],
+    "dependencies": {
+        "jquery": "1.10.2",
+        "bootstrap": "3.3.6"
+    }
+}
