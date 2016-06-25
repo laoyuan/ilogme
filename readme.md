@@ -35,23 +35,23 @@ chown -R nginx:nginx storage
 
 
 #edit nginx.conf
-    server {
-        listen       80;
-        server_name  ilogme.com www.ilogme.com;
-        root         /home/ilogme/public;
-        index        index.php index.html;
-
-        location / {
-            try_files $uri $uri/ /index.php?$query_string;
-        }
-
-        location ~ \.php$ {
-            fastcgi_pass   unix:/run/php-fpm/php70-php-fpm.sock;
-            fastcgi_index  index.php;
-            fastcgi_param  SCRIPT_FILENAME $document_root$fastcgi_script_name;
-            include        fastcgi_params;
-        }
-    }
+>    server {
+>        listen       80;
+>        server_name  ilogme.com www.ilogme.com;
+>        root         /home/ilogme/public;
+>        index        index.php index.html;
+>
+>        location / {
+>            try_files $uri $uri/ /index.php?$query_string;
+>        }
+>
+>        location ~ \.php$ {
+>            fastcgi_pass   unix:/run/php-fpm/php70-php-fpm.sock;
+>            fastcgi_index  index.php;
+>            fastcgi_param  SCRIPT_FILENAME $document_root$fastcgi_script_name;
+>            include        fastcgi_params;
+>        }
+>    }
 ```
 
 
@@ -59,11 +59,11 @@ chown -R nginx:nginx storage
 
 Illuminate/Auth/SessionGuard.php
 ```
-    protected function createRecaller($value)
-    {
-        #return $this->getCookieJar()->forever($this->getRecallerName(), $value);
-        return $this->getCookieJar()->make($this->getRecallerName(), $value, 43200);
-    }
+>    protected function createRecaller($value)
+>    {
+>        #return $this->getCookieJar()->forever($this->getRecallerName(), $value);
+>        return $this->getCookieJar()->make($this->getRecallerName(), $value, 43200);
+>    }
 ```
 
 
