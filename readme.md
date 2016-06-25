@@ -10,28 +10,33 @@ Log and show yourself.Demo [iLogme.com](http://ilogme.com/laoyuan).
 ## Setup
 
 \#MySQL Command-Line
+```
 CREATE DATABASE `ilogme` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
-
+```
+```
 cd /home
 git clone https://github.com/laoyuan/ilogme.git
 cd ilogme
 composer install
-
-*In Mainland China, befor composer install
+#In Mainland China, befor composer install
 composer config -g repo.packagist composer http://packagist.phpcomposer.com
+```
 
-*edit DB_*
+\#edit DB_*
+```
 cp .env.example .env
 vi .env
-
+```
+```
 php artisan key:generate
 php artisan migrate --seed
-
+```
+```
 chown -R nginx:nginx bootstrap/cache
 chown -R nginx:nginx storage
+```
 
-
-#edit nginx.conf
+\#edit nginx.conf
 ```
     server {
         listen       80;
