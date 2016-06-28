@@ -15,7 +15,7 @@
             @endif
             &emsp;{{ $types->where('id', $span->type_id)->first()->title }}：
         </span>
-        <strong>{{ $span->content }}</strong>
+        {{ $span->content }}
         @if ($span->spend === -1)
         <span class="pull-right">进行中，已进行 {{ $span->spend_fine() }}</span>
         @else

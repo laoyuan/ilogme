@@ -1,47 +1,32 @@
 var gulp = require('gulp');
 var elixir = require('laravel-elixir');
 
-/*
- |--------------------------------------------------------------------------
- | Elixir Asset Management
- |--------------------------------------------------------------------------
- |
- | Elixir provides a clean, fluent API for defining some basic Gulp tasks
- | for your Laravel application. By default, we are compiling the Sass
- | file for our application, as well as publishing vendor resources.
- |
- */
 
-var elixir = require('laravel-elixir');
-
-/**
- * 拷贝任何需要的文件
- *
- * Do a 'gulp copyfiles' after bower updates
- */
+//从 bower 安装的包复制文件
 gulp.task("copyfiles", function() {
-
     gulp.src("vendor/bower_dl/jquery/jquery.js")
+        .pipe(gulp.dest("resources/assets/js/"));
+
+    gulp.src("vendor/bower_dl/bootstrap/dist/js/bootstrap.js")
         .pipe(gulp.dest("resources/assets/js/"));
 
     gulp.src("vendor/bower_dl/bootstrap/less/**")
         .pipe(gulp.dest("resources/assets/less/bootstrap"));
 
-    gulp.src("vendor/bower_dl/bootstrap/dist/js/bootstrap.js")
-        .pipe(gulp.dest("resources/assets/js/"));
-
     gulp.src("vendor/bower_dl/bootstrap/dist/fonts/**")
         .pipe(gulp.dest("public/build/assets/fonts"));
 
+    gulp.src("vendor/bower_dl/bootswatch/journal/*.less")
+        .pipe(gulp.dest("resources/assets/less"));
 });
 
 
 elixir(function(mix) {
     // 编译 Less 
-    mix.less('bootstrap/bootstrap.less', 'resources/assets/css/bootstrap-3.3.6.css');
+    mix.less('app.less', 'resources/assets/css/bootstrap-3.3.6.css');
 
     //合并 CSS
-    mix.styles(['style.css', 'bootstrap-3.3.6.css'],
+    mix.styles(['bootstrap-3.3.6.css', 'style.css'],
         'public/assets/css/all.css'
     );
 

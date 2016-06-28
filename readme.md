@@ -9,34 +9,29 @@ Log and show yourself.Demo [iLogme.com](http://ilogme.com/laoyuan).
 
 ## Setup
 
-\#MySQL Command-Line
 ```
+#MySQL Command-Line
 CREATE DATABASE `ilogme` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
-```
-```
+
 cd /home
 git clone https://github.com/laoyuan/ilogme.git
 cd ilogme
 composer install
 #In Mainland China, befor composer install
 composer config -g repo.packagist composer http://packagist.phpcomposer.com
-```
 
-\#edit DB_*
-```
 cp .env.example .env
+#edit DB_*
 vi .env
-```
-```
+
 php artisan key:generate
 php artisan migrate --seed
-```
-```
+
 chown -R nginx:nginx bootstrap/cache
 chown -R nginx:nginx storage
-```
 
-\#edit nginx.conf
+#edit nginx.conf
+```
 ```
     server {
         listen       80;
@@ -57,10 +52,10 @@ chown -R nginx:nginx storage
     }
 ```
 
-
 ## hack for "Remember me", reduce to 30 days
-
-Illuminate/Auth/SessionGuard.php
+```
+vi vendor/laravel/framework/src/Illuminate/Auth/SessionGuard.php
+```
 ```
     protected function createRecaller($value)
     {
@@ -69,12 +64,7 @@ Illuminate/Auth/SessionGuard.php
     }
 ```
 
-
-
-
 ## DevLog
-
-
 ```
 cd ~/laravel
 composer create-project laravel/laravel --prefer-dist ilogme
@@ -90,14 +80,18 @@ npm install -g coffee-script marked jshint leasot node-gyp gulp bower
 npm install gulp laravel-elixir
 
 vi .bowerrc
-
+```
+```
 {
     "directory": "vendor/bower_dl"
 }
+```
 
+```
 sudo npm install bower
 
 vi bower.json
+```
 {
     "name": "ilogme",
     "description": "log yourself",
@@ -110,24 +104,26 @@ vi bower.json
     ],
     "dependencies": {
         "jquery": "1.10.2",
-        "bootstrap": "3.3.6"
+        "bootstrap": "3.3.6",
+        "bootswatch": "3.3.6"
     }
 }
+```
 
 bower update
 
 vi gulpfile.js
-
+```
+```
 var gulp = require('gulp');
 var elixir = require('laravel-elixir');
 
 /**
- * 拷贝任何需要的文件
+ * Copy any needed files.
  *
- * Do a 'gulp copyfiles' after bower updates
+ * Do `gulp copyfiles` after bower updates
  */
 gulp.task("copyfiles", function() {
-
     gulp.src("vendor/bower_dl/jquery/jquery.js")
         .pipe(gulp.dest("resources/assets/js/"));
 
@@ -138,21 +134,34 @@ gulp.task("copyfiles", function() {
         .pipe(gulp.dest("resources/assets/js/"));
 
     gulp.src("vendor/bower_dl/bootstrap/dist/fonts/**")
-        .pipe(gulp.dest("public/assets/fonts"));
-
+        .pipe(gulp.dest("public/build/assets/fonts"));
 });
 
+/**
+* Default `gulp` is to run this elixir stuff
+*/
+elixir(function(mix) {
+    // 编译 Less 
+    mix.less('bootstrap/bootstrap.less', 'resources/assets/css/bootstrap-3.3.6.css');
 
+    //合并 CSS
+    mix.styles(['style.css', 'bootstrap-3.3.6.css'],
+        'public/assets/css/all.css'
+    );
 
+    // 合并 js
+    mix.scripts(['jquery.js','bootstrap.js'],
+        'public/assets/js/all.js'
+    );
 
+    //发布
+    mix.version(['assets/css/all.css', 'assets/js/all.js']);
+});
+```
 
-resources/assets/less
-wget http://bootswatch.com/journal/bootswatch.less
-mv bootswatch.less resources/assets/less/bootswatch.less
-wget http://bootswatch.com/journal/variables.less
-mv variables.less resources/assets/less/variables.less
-
-
+```
+gulp copyfiles
+vi resources/assets/less/
 
 
 
