@@ -34,8 +34,9 @@ class UserController extends Controller
     {
         $user = User::where('name', $name)->firstOrFail();
         $spans = null;
-        $ar_sum = [];
         $ar_break = [];
+        $ar_sum = [];
+        $ar_sum_type = [];
 
         if ($date === null) {
             $last_span = $user->spans()->orderBy('created_at', 'desc')->first();
@@ -50,27 +51,18 @@ class UserController extends Controller
                 return redirect(url('/' . $user->name));
             }
 
-            //第1个时段有可能是跨天的，比如睡觉
-            $first_span = $user->spans()->where('id', '<', $spans->first()->id)->orderBy('id', 'desc')->first();
-            if ($first_span && $first_span->ended_at()->format('Ymd') === $date) {
-                $spans->prepend($first_span);
-            }
-
-            //相邻时段间隔 (dirty)、工作、学习时长统计
+            //相邻时段间隔、每个时段结束后相应 type 时长统计
             foreach ($spans as $k => $span) {
-                if (empty($ar_sum[$span->type_id])) {
-                    $ar_sum[$span->type_id] = 0;
+                if (empty($ar_sum_type[$span->type_id])) {
+                    $ar_sum_type[$span->type_id] = 0;
                 }
-                $ar_sum[$span->type_id] += $span->spend !== -1 ? $span->spend : time() - $span->created_at->getTimestamp();
-                $time_begin = $span->created_at->getTimestamp();
-                $ar_break[$k] = $time_begin + $span->spend;
+                $ar_sum_type[$span->type_id] += $span->spend !== -1 ? $span->spend : time() - $span->created_at->getTimestamp();
+                $ar_sum[$span->id] = $ar_sum_type[$span->type_id];
+
                 if ($k > 0) {
-                    $ar_break[$k - 1] = $time_begin - $ar_break[$k - 1];
+                    $ar_break[$k - 1] = $span->created_at->getTimestamp() - $last_end;
                 }
-                //最后一个时段
-                if ($k == $spans->count() - 1) {
-                    $ar_break[$k] = 0;
-                }
+                $last_end = $span->created_at->getTimestamp() + $span->spend;
             }
         }
 
@@ -84,7 +76,7 @@ class UserController extends Controller
 
         $types = $user->types;
         $todos = $user->todos()->orderBy('created_at', 'desc')->get();
-        return view('user.home', compact('user', 'date', 'spans', 'types', 'todos', 'pics', 'ar_break', 'ar_sum'));
+        return view('user.home', compact('user', 'date', 'spans', 'types', 'todos', 'pics', 'ar_break', 'ar_sum', 'ar_sum_type'));
     }
 
     //保存截图

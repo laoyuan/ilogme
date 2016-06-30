@@ -16,7 +16,7 @@ class SpanController extends Controller
 
     protected function validateSpan(Request $request)
     {
-        $this->validate($request, ['content' => 'bail|required|max:255', 'type_id' => 'required']);
+        $this->validate($request, ['content' => 'bail|max:255', 'type_id' => 'required']);
     }
 
 

@@ -49,4 +49,32 @@ class Span extends Model
             return null;
         }
     }
+
+    //开始 - 结束时间
+    public function getTime()
+    {
+        if ($this->spend === -1) {
+            return $this->created_at->format('G:i') . ' 开始';
+        }
+        else {
+            if ($this->created_at->format('Ymd') !== $this->ended_at()->format('Ymd')) {
+                return $this->created_at->format('G:i') . ' - ' . $this->ended_at()->format('m-d G:i');
+            }
+            else {
+                return $this->created_at->format('G:i') . ' - ' . $this->ended_at()->format('G:i');
+            }
+        }
+    }
+
+    //中文星期几
+    public function getWeekZh()
+    {
+        return mb_substr('日一二三四五六', $this->created_at->format('w'), 1);
+    }
 }
+
+
+
+
+
+

@@ -28,6 +28,8 @@
             @endif
             
             @include('partials.spans')
+
+            
         </div>
 
     </div>
@@ -87,12 +89,25 @@
             });
         });
 
+        //输入提醒
         $('#input-title').typeahead({
             source: typeahead_work, 
             autoSelect: true,
             minLength: 0,
             showHintOnFocus: true
-        }); 
+        });
+
+        //简短提示
+        $('input').focus(function() {
+            if ($(this).attr('placeholder') != 'undefined' && $(this).attr('_placeholder') != 'undefined') {
+                $(this).attr('placeholder','');
+            }
+        });
+        $('input').blur(function() {
+            if ($(this).attr('placeholder') != 'undefined' && $(this).attr('_placeholder') != 'undefined') {
+                $(this).attr('placeholder', $(this).attr('_placeholder'));
+            }
+        });
     </script>
     @endif
 @endsection

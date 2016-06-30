@@ -77,7 +77,7 @@ composer remove overtrue/laravel-lang --update-with-dependencies
 
 npm update -g
 npm install -g coffee-script marked jshint leasot node-gyp gulp bower
-npm install gulp laravel-elixir
+npm install gulp laravel-elixir bower
 
 vi .bowerrc
 ```
@@ -88,7 +88,6 @@ vi .bowerrc
 ```
 
 ```
-sudo npm install bower
 
 vi bower.json
 ```
