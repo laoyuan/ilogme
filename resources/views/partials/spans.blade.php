@@ -39,7 +39,7 @@
     @elseif (! empty($ar_sum_type[2]))
     <p class="pull-right">今天已学习 {{ceil($ar_sum_type[1]/60)}} 分钟</p>
     @endif
-    <br><br>
+    <br>
 
 <!-- Display Validation Errors -->
 @include('errors.spanErrors')
@@ -73,7 +73,7 @@
 <br>
 <h4>打卡日志</h4>
 <p>
-    【{{ date('n月j日', time()) }}】周{{ $span->getWeekZh() }}<br>
+    【{{ $span->created_at->format('n月j日') }}】周{{ $span->getWeekZh() }}<br>
     @foreach ($spans as $k => $span)
         {{ $span->getTime() }}
         @if ($span->spend === -1)
