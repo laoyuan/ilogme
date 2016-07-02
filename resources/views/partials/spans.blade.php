@@ -77,7 +77,11 @@
     @foreach ($spans as $k => $span)
         {{ $span->getTime() }}
         @if ($span->spend === -1)
-            第{{ $k + 1 }}个时段<br>
+            第{{ $k + 1 }}个时段
+            @if ( $span->content )
+                {{ $span->content }}
+            @endif
+            <br>
         @else
             <br>第{{ $k + 1 }}个时段{{ $span->spend_fine() }}，今日累计{{ $types->where('id', $span->type_id)->first()->title }}{{ ceil($ar_sum[$span->id] / 60) }}分钟<br>
         @endif
