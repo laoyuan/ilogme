@@ -1,5 +1,6 @@
 @extends('layouts.app')
 
+
 @section('content')
     <div class="row">
 
@@ -35,12 +36,14 @@
     </div>
 @endsection
 
+
 @section('js')
-    @if (Auth::check())
-    <script type="text/javascript" src="/assets/js/bootstrap3-typeahead.js"></script>
-    
+    @if (Auth::check() && Auth::user()->id === $user->id)
+    <script type="text/javascript" src="/assets/js/bootstrap3-typeahead.min.js"></script>
+    <script type="text/javascript" src="/assets/js/jquery.simple-dtpicker.js"></script>
     <script type="text/javascript">
-        
+        var itemId, _index, inputId;
+
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -49,7 +52,7 @@
 
         //图片预加载，前后的第5张图
         $('#myCarousel').on('slide.bs.carousel', function () {
-            var _index = parseInt($('#myCarousel .active img').attr('_index'));
+            _index = parseInt($('#myCarousel .active img').attr('_index'));
             next_index = (_index + 5) % ar_pic.length;
             prev_index = (_index - 5 + ar_pic.length) % ar_pic.length;
             $('#pic_' + ar_pic[next_index]).attr('src', $('#pic_' + ar_pic[next_index]).attr('data-original'));
@@ -58,7 +61,7 @@
 
         //删除todo
         $('#todos .close').click(function () {
-            var itemId = $(this.parentNode).attr('_itemid');
+            itemId = $(this.parentNode).attr('_itemid');
             $.ajax({
                 context: this,
                 type: "POST",
@@ -75,7 +78,7 @@
 
         //结束时段
         $('#spans .btn-sm').click(function () {
-            var itemId = $(this).attr('_itemid');
+            itemId = $(this).attr('_itemid');
             $.ajax({
                 context: this,
                 type: "POST",
@@ -98,16 +101,29 @@
         });
 
         //简短提示
-        $('input').focus(function() {
+        $('input').focus(function () {
             if ($(this).attr('placeholder') != 'undefined' && $(this).attr('_placeholder') != 'undefined') {
                 $(this).attr('placeholder','');
             }
         });
-        $('input').blur(function() {
+        $('input').blur(function () {
             if ($(this).attr('placeholder') != 'undefined' && $(this).attr('_placeholder') != 'undefined') {
                 $(this).attr('placeholder', $(this).attr('_placeholder'));
             }
         });
+
+        //修改结束时间
+        $('.fa-pencil').click(function () {
+            inputId = $(this).attr('_inputId');
+            $('#' + inputId).toggle();
+        });
+
+
+
+        $(function () {
+            $('input[name=end_time]').appendDtpicker();
+        });
     </script>
+
     @endif
 @endsection

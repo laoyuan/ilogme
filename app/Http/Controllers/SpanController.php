@@ -101,7 +101,13 @@ class SpanController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $span = $request->user()->spans()->findOrFail($id);
+        $endTime = strtotime($request->end_time);
+        $span->spend = $endTime - $span->created_at->getTimestamp();
+        if ($span->spend > 0) {
+            $span->save();
+        }
+        return back();
     }
 
     /**

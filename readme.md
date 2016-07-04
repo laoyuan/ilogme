@@ -104,7 +104,9 @@ vi bower.json
     "dependencies": {
         "jquery": "1.10.2",
         "bootstrap": "3.3.6",
-        "bootswatch": "3.3.6"
+        "bootswatch": "3.3.6",
+        "bootstrap3-typeahead": "4.0.1",
+        "jquery-simple-datetimepicker": "1.12.0"
     }
 }
 ```
@@ -160,9 +162,15 @@ elixir(function(mix) {
 
 ```
 gulp copyfiles
-vi resources/assets/less/
 
 
+```
+wget https://raw.githubusercontent.com/bassjobsen/Bootstrap-3-Typeahead/master/bootstrap3-typeahead.min.js
+mv bootstrap3-typeahead.min.js public/assets/js/bootstrap3-typeahead.min.js
+
+wget https://github.com/mugifly/jquery-simple-datetimepicker/raw/master/jquery.simple-dtpicker.css
+mv bootstrap3-typeahead.js public/assets/js/bootstrap3-typeahead.js
+```
 
 
 
@@ -207,15 +215,6 @@ php artisan make:controller NoteController --resource
 php artisan make:controller PicController --resource
 ```
 
-```
-wget http://bootswatch.com/journal/bootstrap.min.css
-mv bootstrap.min.css public/assets/css/bootstrap-3.3.6.min.css
-```
-delete google font in first line, replace `"News Cycle"` with `Helvetica`.
-
-
-wget --no-check-certificate https://github.com/jieyou/lazyload/raw/master/lazyload.min.js
-mv lazyload.min.js public/assets/js/lazyload.min.js
 
 
 

@@ -28,7 +28,7 @@
 
 Route::group(['middleware' => ['web']], function () {
     Route::auth();
-    Route::resource('span', 'SpanController', ['only' => ['store', 'destroy']]);
+    Route::resource('span', 'SpanController', ['only' => ['store', 'update', 'destroy']]);
     Route::resource('type', 'TypeController', ['only' => ['store', 'destroy']]);
     Route::resource('todo', 'TodoController', ['only' => ['store', 'destroy']]);
     Route::resource('note', 'NoteController', ['only' => ['store', 'destroy']]);
