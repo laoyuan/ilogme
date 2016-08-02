@@ -19,6 +19,10 @@
             </div>
             @include('partials.pics')
             @include('partials.todos')
+
+            <div>
+                {!! Calendar::generate() !!}
+            </div>
         </div>
 
         <div class="col-md-8">
@@ -115,13 +119,17 @@
         //修改结束时间
         $('.fa-pencil').click(function () {
             inputId = $(this).attr('_inputId');
-            $('#' + inputId).toggle();
+            $('#' + inputId).toggle(function () {
+                if ($(this).is(":visible")) {
+                    ;
+                } 
+            });
         });
 
-
-
         $(function () {
-            $('input[name=end_time]').appendDtpicker();
+            //显示时间选择
+            $('input[name=end_time]').appendDtpicker({"locale": "cn",
+                                                      "todayButton": false});
         });
     </script>
 

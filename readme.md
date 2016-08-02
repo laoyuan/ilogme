@@ -60,11 +60,13 @@ vi vendor/laravel/framework/src/Illuminate/Auth/SessionGuard.php
     protected function createRecaller($value)
     {
         #return $this->getCookieJar()->forever($this->getRecallerName(), $value);
-        return $this->getCookieJar()->make($this->getRecallerName(), $value, 43200);
+        return $this->getCookieJar()->make($this->getRecallerName(), $value, 86400);
     }
 ```
 
 ## DevLog
+https://github.com/Crinsane/LaravelCalendar
+
 ```
 cd ~/laravel
 composer create-project laravel/laravel --prefer-dist ilogme
@@ -88,8 +90,8 @@ vi .bowerrc
 ```
 
 ```
-
 vi bower.json
+```
 ```
 {
     "name": "ilogme",
@@ -111,66 +113,17 @@ vi bower.json
 }
 ```
 
+```
 bower update
 
+wget -O public/assets/js/bootstrap3-typeahead.min.js https://raw.githubusercontent.com/bassjobsen/Bootstrap-3-Typeahead/master/bootstrap3-typeahead.min.js
+wget -O public/assets/js/bootstrap3-typeahead.js https://github.com/mugifly/jquery-simple-datetimepicker/raw/master/jquery.simple-dtpicker.css
+
 vi gulpfile.js
-```
-```
-var gulp = require('gulp');
-var elixir = require('laravel-elixir');
 
-/**
- * Copy any needed files.
- *
- * Do `gulp copyfiles` after bower updates
- */
-gulp.task("copyfiles", function() {
-    gulp.src("vendor/bower_dl/jquery/jquery.js")
-        .pipe(gulp.dest("resources/assets/js/"));
-
-    gulp.src("vendor/bower_dl/bootstrap/less/**")
-        .pipe(gulp.dest("resources/assets/less/bootstrap"));
-
-    gulp.src("vendor/bower_dl/bootstrap/dist/js/bootstrap.js")
-        .pipe(gulp.dest("resources/assets/js/"));
-
-    gulp.src("vendor/bower_dl/bootstrap/dist/fonts/**")
-        .pipe(gulp.dest("public/build/assets/fonts"));
-});
-
-/**
-* Default `gulp` is to run this elixir stuff
-*/
-elixir(function(mix) {
-    // 编译 Less 
-    mix.less('bootstrap/bootstrap.less', 'resources/assets/css/bootstrap-3.3.6.css');
-
-    //合并 CSS
-    mix.styles(['style.css', 'bootstrap-3.3.6.css'],
-        'public/assets/css/all.css'
-    );
-
-    // 合并 js
-    mix.scripts(['jquery.js','bootstrap.js'],
-        'public/assets/js/all.js'
-    );
-
-    //发布
-    mix.version(['assets/css/all.css', 'assets/js/all.js']);
-});
-```
-
-```
 gulp copyfiles
-
-
-```
-wget https://raw.githubusercontent.com/bassjobsen/Bootstrap-3-Typeahead/master/bootstrap3-typeahead.min.js
-mv bootstrap3-typeahead.min.js public/assets/js/bootstrap3-typeahead.min.js
-
-wget https://github.com/mugifly/jquery-simple-datetimepicker/raw/master/jquery.simple-dtpicker.css
-mv bootstrap3-typeahead.js public/assets/js/bootstrap3-typeahead.js
-```
+vi resources/assets/less/bootswatch.less
+gulp --production
 
 
 

@@ -13,13 +13,16 @@ gulp.task("copyfiles", function() {
     gulp.src("vendor/bower_dl/bootstrap/less/**")
         .pipe(gulp.dest("resources/assets/less/bootstrap"));
 
+    gulp.src("vendor/bower_dl/bootstrap/dist/fonts/**")
+        .pipe(gulp.dest("public/build/assets/fonts"));
+
     gulp.src("vendor/bower_dl/bootswatch/journal/*.less")
         .pipe(gulp.dest("resources/assets/less"));
 
-    gulp.src("vendor/bower_dl/font-awesome/less/**")
+    gulp.src("vendor/bower_dl/fontawesome/less/**")
         .pipe(gulp.dest("resources/assets/less/fontawesome"));
 
-    gulp.src("vendor/bower_dl/font-awesome/fonts/**")
+    gulp.src("vendor/bower_dl/fontawesome/fonts/**")
         .pipe(gulp.dest("public/build/assets/fonts"));
 
     gulp.src("vendor/bower_dl/bootstrap/dist/fonts/**")
@@ -46,7 +49,7 @@ elixir(function(mix) {
     );
 
     // 合并 js
-    mix.scripts(['jquery.js','bootstrap.js'],
+    mix.scripts(['jquery.js', 'bootstrap.js'],
         'public/assets/js/all.js'
     );
 

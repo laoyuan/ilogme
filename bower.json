@@ -12,8 +12,8 @@
         "jquery": "1.10.2",
         "bootstrap": "3.3.6",
         "bootswatch": "3.3.6",
+        "fontawesome": "4.6.3",
         "bootstrap3-typeahead": "4.0.1",
-        "jquery-simple-datetimepicker": "1.12.0",
-        "fontawesome": "4.6.3"
+        "jquery-simple-datetimepicker": "1.12.0"
     }
 }
